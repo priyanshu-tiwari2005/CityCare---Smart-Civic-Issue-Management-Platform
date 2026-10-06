@@ -1,105 +1,628 @@
-# CityCare – Smart Civic Issue Management Platform
+# 🏙️ CityCare – Smart Civic Issue Management Platform
 
-CityCare is a smart civic issue reporting and management platform that will be enabling the citizens to report civic issues and also allowing the municipal officers and administrators to verify, assign, resolve, monitor and analyse those issues through a structured resolution workflow. This is the web version of the CityCare project which is specifically being created for the Citizens and Administrators (City & System). 
+CityCare is a **MERN-stack based civic issue reporting and management platform** that connects citizens with municipal administrators and field officers.
 
-## About the Project
+The platform enables citizens to report civic issues such as **road damage, garbage accumulation, streetlight failures, drainage problems, water supply issues, and other public-service complaints**. Administrators can verify, assign, monitor, and resolve complaints through a structured and transparent workflow.
 
-Urban municipal administration often suffers from fragmented communication, unverified issue reports, opaque resolution tracking, and lack of real-time operational visibility. CityCare addresses these challenges by providing a centralized digital platform that will be bridging the gap between citizens, field workers and municipal administrative tiers.
+---
 
-The CityCare platform provides an end-to-end civic governance issue lifecycle. From the moment the citizen submits an issue and the automated duplicate issue checks to the Unit Officer verifies the issue, assigns to Field Officer, approves or request reworks of the evidence based issue resolution submitted by Field Officers till the citizen feedback and rating, everything is being tracked with full transparency, very strict SLA Deadline monitoring and role based accountability. 
+## 📌 About the Project
 
-## Key Features
+In many cities, citizens face difficulties while reporting civic problems and tracking their resolution. At the same time, municipal authorities need an organized system to manage complaints, assign responsible officers, monitor deadlines, and evaluate department performance.
 
-* **Citizen Features:-** The citizens can use the platform to report civic issues, track their progress, communicating with the officers to clarify doubts and participate in public discussions. 
-* **City Administrator Features:-** The City Admins are responsible for managing all the civic operations that are within their assigned city by monitoring the KPIs, reviewing and filtering all the city complaints, reassignment of officer, updation of issue priority or category, managing SLA Deadline and Issue Escalations, viewing audit logs of the city wide actions being taken by citizens and officers, analysing department wise performance and monitoring distribution of issue through the city map. 
-* **System Administrator Features:-** The System Admins are responsible for handling all the platform wide administration across the different cities and officer management by provisioning and mapping officer accounts, monitoring the SLA breaches and issue escalations, maintaining or creating citizen badges and analysing civic issue trend across all the different cities. 
+**CityCare** provides a centralized platform for managing the complete lifecycle of a civic complaint.
 
-## Issue Workflow
+The system supports:
 
-### Primary Lifecycle
-`Pending` → `Verified` → `Assigned` → `In Progress` → `Pending UO Verification` → `Resolved / Closed`
+* Citizen complaint reporting
+* Complaint verification
+* Department and officer assignment
+* Real-time status tracking
+* SLA/deadline monitoring
+* Complaint escalation
+* Evidence-based resolution
+* Citizen feedback and ratings
+* Administrative analytics
+* Location-based complaint visualization
+* Role-based access control
 
-### Secondary & Exception States
-* `Rejected`: Issues deemed invalid, out-of-scope, or insufficient evidence during Unit Officer verification.
-* `Rework Required`: Issues sent back to the assigned Field Officer when submitted work is unsatisfactory.
-* `Reopened`: Resolved issues reopened by citizens due to recurring or incomplete resolution.
-* `Escalated`: Issues escalated to City/System Administrators due to SLA breach or operational blockers.
-* `Withdrawn`: Issues withdrawn by the reporting citizen prior to verification.
+The goal is to make civic issue management **transparent, accountable, and easier to monitor**.
 
-## Core Algorithms
+---
 
-The CityCare makes use of core algorithms for **duplicate detection, geographical distance calculation, assignment of officers (Unit Officer / Field Officer), SLA deadline & Issue Escalation, trend analysis, evaluation of officer performance** and **citizen rate limiting**. All these together help in automating the **issue routing, reduce redundant issues, monitor deadlines** and maintaining a consistent issue resolution workflow. 
+## ✨ Key Features
 
-## Getting Started
+### 👤 Citizen Module
 
-### Prerequisites
+* User registration and login
+* Secure JWT-based authentication
+* Report civic issues
+* Upload complaint images
+* Select complaint category and department
+* Add issue description
+* Provide issue location
+* Track complaint status
+* View complaint history
+* Communicate with assigned officers
+* Reopen unresolved/recurring complaints
+* Withdraw complaints before verification
+* Submit feedback and ratings
 
-Ensure you have the following installed and configured before setting up the project:
+---
 
-* **Node.js**
-* **Git**
-* A **Convex** account and project setup
-* Google Cloud Platform API key with enabled Maps JavaScript API, Places API and Geocoding API
-* API keys for configured third party services (Gemini AI, Upstash Redis, Resend)
+### 🏢 City Administrator Module
 
-### Clone Repository
+* Admin dashboard
+* View and filter city-wide complaints
+* Verify or reject complaints
+* Assign complaints to field officers
+* Reassign officers when required
+* Change complaint priority/category
+* Monitor SLA deadlines
+* Handle escalated complaints
+* Review resolution evidence
+* Request rework from field officers
+* Monitor department performance
+* View complaint statistics
+* Monitor complaints on a city map
+* View system audit logs
 
-```bash
-git clone https://github.com/sagnikdey45/CityCare---Smart-Civic-Issue-Management-Platform
+---
+
+### 👷 Field Officer Module
+
+* Officer dashboard
+* View assigned complaints
+* Accept assigned tasks
+* Update complaint progress
+* Add work/resolution details
+* Upload resolution evidence
+* Mark complaints for verification
+* Respond to citizen queries
+* Track pending and completed assignments
+
+---
+
+### 🔐 Authentication & Authorization
+
+CityCare uses **role-based access control (RBAC)** to provide different permissions to different users.
+
+```text
+Citizen
+   ↓
+Report & Track Issues
+
+Field Officer
+   ↓
+Manage Assigned Issues
+
+City Admin
+   ↓
+Verify, Assign & Monitor Issues
+
+System Admin
+   ↓
+Manage Platform & Cities
 ```
-```bash
-cd CityCare---Smart-Civic-Issue-Management-Platform
+
+Authentication is implemented using:
+
+* JWT
+* bcrypt/bcryptjs
+* Protected routes
+* Role-based authorization
+
+---
+
+# 🔄 Issue Workflow
+
+## Primary Lifecycle
+
+```text
+Pending
+   ↓
+Verified
+   ↓
+Assigned
+   ↓
+In Progress
+   ↓
+Pending Verification
+   ↓
+Resolved
+   ↓
+Closed
 ```
 
-### Install Dependencies
+## Exception States
+
+```text
+Pending
+ ├── Rejected
+ ├── Withdrawn
+ └── Verified
+       ↓
+    Assigned
+       ↓
+    In Progress
+       ↓
+    Rework Required
+       ↓
+    Resolved
+       ↓
+    Reopened
+       ↓
+    In Progress
+```
+
+### Status Description
+
+| Status               | Description                                  |
+| -------------------- | -------------------------------------------- |
+| Pending              | Complaint submitted by citizen               |
+| Verified             | Complaint verified by administrator          |
+| Rejected             | Invalid or insufficient complaint            |
+| Assigned             | Complaint assigned to an officer             |
+| In Progress          | Officer is working on the issue              |
+| Pending Verification | Resolution submitted for verification        |
+| Rework Required      | Additional work/evidence required            |
+| Resolved             | Issue has been resolved                      |
+| Closed               | Complaint successfully completed             |
+| Reopened             | Citizen reports that the issue still exists  |
+| Escalated            | Complaint requires higher-level intervention |
+| Withdrawn            | Complaint withdrawn by citizen               |
+
+---
+
+# ⚙️ Core Algorithms
+
+CityCare includes several rule-based algorithms to improve complaint management.
+
+### 1. Duplicate Complaint Detection
+
+The system can identify potentially duplicate complaints using factors such as:
+
+* Complaint category
+* Description similarity
+* Geographical proximity
+* Recent submission time
+
+This helps reduce repeated complaints for the same civic issue.
+
+---
+
+### 2. Geographical Distance Calculation
+
+The **Haversine Formula** can be used to calculate the distance between two geographical coordinates.
+
+This can help in:
+
+* Finding nearby complaints
+* Assigning nearby officers
+* Displaying complaints on maps
+
+---
+
+### 3. Officer Assignment
+
+Complaints can be assigned based on:
+
+```text
+Department
+     +
+Complaint Category
+     +
+Officer Availability
+     +
+Location / Distance
+     ↓
+Suitable Field Officer
+```
+
+---
+
+### 4. SLA & Escalation
+
+Every complaint can have a defined resolution deadline.
+
+```text
+Complaint Created
+       ↓
+SLA Timer Starts
+       ↓
+Officer Assigned
+       ↓
+Issue In Progress
+       ↓
+Deadline Approaching
+       ↓
+Escalation
+```
+
+If an issue crosses its defined SLA deadline, it can automatically be marked for escalation.
+
+---
+
+### 5. Officer Performance Analysis
+
+Performance can be calculated using metrics such as:
+
+* Assigned complaints
+* Resolved complaints
+* Average resolution time
+* SLA compliance
+* Rework requests
+* Citizen ratings
+
+---
+
+### 6. Citizen Rate Limiting
+
+Rate limiting can be implemented to prevent excessive complaint submissions and reduce system abuse.
+
+---
+
+# 🛠️ Tech Stack
+
+## Frontend
+
+* React.js
+* React Router
+* JavaScript
+* HTML5
+* CSS3
+* Tailwind CSS
+* Axios
+* Recharts
+
+## Backend
+
+* Node.js
+* Express.js
+* REST APIs
+* JWT Authentication
+* bcrypt/bcryptjs
+
+## Database
+
+* MongoDB
+* Mongoose
+
+## Maps & Location
+
+* Leaflet
+* OpenStreetMap
+
+## File Storage
+
+* Cloudinary *(optional)*
+
+## Real-Time Communication
+
+* Socket.IO *(optional)*
+
+## Development Tools
+
+* Git
+* GitHub
+* VS Code
+* Postman
+* npm
+
+---
+
+# 🏗️ Project Architecture
+
+```text
+CityCare/
+│
+├── client/
+│   ├── src/
+│   │   ├── components/
+│   │   ├── pages/
+│   │   ├── layouts/
+│   │   ├── hooks/
+│   │   ├── services/
+│   │   ├── context/
+│   │   ├── utils/
+│   │   └── App.jsx
+│   │
+│   └── package.json
+│
+├── server/
+│   ├── controllers/
+│   ├── models/
+│   ├── routes/
+│   ├── middleware/
+│   ├── services/
+│   ├── utils/
+│   ├── config/
+│   ├── uploads/
+│   └── server.js
+│
+├── .gitignore
+├── README.md
+└── package.json
+```
+
+---
+
+# 🗄️ Database Design
+
+The application can use the following MongoDB collections:
+
+```text
+users
+complaints
+departments
+categories
+assignments
+comments
+notifications
+feedback
+auditLogs
+slaRules
+cities
+```
+
+### Main Relationships
+
+```text
+User
+ ├── Complaints
+ ├── Comments
+ ├── Feedback
+ └── Notifications
+
+Complaint
+ ├── Category
+ ├── Department
+ ├── Assigned Officer
+ ├── Comments
+ ├── Evidence
+ ├── Feedback
+ └── Audit Logs
+```
+
+---
+
+# 🚀 Getting Started
+
+## Prerequisites
+
+Make sure the following are installed:
+
+* Node.js
+* npm
+* Git
+* MongoDB / MongoDB Atlas
+* Code editor such as VS Code
+
+Optional services:
+
+* Cloudinary
+* Socket.IO
+* Leaflet/OpenStreetMap
+
+---
+
+## 📥 Clone the Repository
 
 ```bash
+git clone <YOUR_GITHUB_REPOSITORY_URL>
+```
+
+```bash
+cd CityCare
+```
+
+---
+
+## 📦 Install Dependencies
+
+### Install Backend Dependencies
+
+```bash
+cd server
 npm install
 ```
 
-## Environment Variables
+### Install Frontend Dependencies
 
-Create an `.env.local` file in the root directory. Actual secret keys and credentials must never be committed to source control.
+```bash
+cd ../client
+npm install
+```
+
+---
+
+# 🔑 Environment Variables
+
+Create a `.env` file inside the `server` directory.
 
 ```env
-CONVEX_DEPLOYMENT=your_convex_deployment
-NEXT_PUBLIC_CONVEX_URL=your_convex_url
-NEXT_PUBLIC_GOOGLE_MAPS_API_KEY=your_google_maps_api_key
-NEXTAUTH_SECRET=your_nextauth_secret
-NEXTAUTH_URL=http://localhost:3000
+PORT=5000
 
-# Additional Service Credentials
-GEMINI_API_KEY=your_gemini_api_key
-UPSTASH_REDIS_REST_URL=your_upstash_redis_url
-UPSTASH_REDIS_REST_TOKEN=your_upstash_redis_token
-RESEND_API_KEY=your_resend_api_key
+MONGO_URI=your_mongodb_connection_string
+
+JWT_SECRET=your_jwt_secret
+
+CLIENT_URL=http://localhost:5173
+
+# Optional
+CLOUDINARY_CLOUD_NAME=your_cloudinary_name
+CLOUDINARY_API_KEY=your_cloudinary_api_key
+CLOUDINARY_API_SECRET=your_cloudinary_api_secret
 ```
 
-## Running the Application
+> **Important:** Never commit `.env` files or secret credentials to GitHub.
 
-Convex backend services and the Next.js development web server must run concurrently in separate terminal sessions.
+---
 
-**Terminal 1 (Convex Backend):**
+# ▶️ Running the Application
 
-```bash
-npx convex dev
-```
-
-**Terminal 2 (Next.js Development Server):**
+Start the backend:
 
 ```bash
+cd server
 npm run dev
 ```
 
-Once started, open your browser and navigate to:
-
-`http://localhost:3000`
-## Deployment
-
-The Next.js frontend can be deployed to **Vercel** by connecting your GitHub repository and configuring all environment variables in the project settings.
-
-The production Convex backend functions and schema can be deployed using:
+Start the frontend in another terminal:
 
 ```bash
-npx convex deploy
+cd client
+npm run dev
 ```
+
+The application will normally be available at:
+
+```text
+http://localhost:5173
+```
+
+The backend API will normally run at:
+
+```text
+http://localhost:5000
+```
+
+---
+
+# 🔌 REST API Structure
+
+Example API structure:
+
+```text
+/api/auth
+/api/users
+/api/complaints
+/api/departments
+/api/categories
+/api/officers
+/api/assignments
+/api/comments
+/api/feedback
+/api/notifications
+/api/analytics
+```
+
+### Example Complaint APIs
+
+```text
+POST   /api/complaints
+GET    /api/complaints
+GET    /api/complaints/:id
+PUT    /api/complaints/:id
+DELETE /api/complaints/:id
+PATCH  /api/complaints/:id/status
+PATCH  /api/complaints/:id/assign
+POST   /api/complaints/:id/comments
+POST   /api/complaints/:id/feedback
+```
+
+---
+
+# 📊 Admin Dashboard
+
+The administrative dashboard can provide:
+
+* Total complaints
+* Pending complaints
+* Verified complaints
+* In-progress complaints
+* Resolved complaints
+* Escalated complaints
+* SLA compliance
+* Department-wise statistics
+* Officer performance
+* Complaint category distribution
+* Monthly complaint trends
+* Location-based complaint visualization
+
+Example:
+
+```text
+Total Complaints       : 1,250
+Pending                : 180
+In Progress            : 320
+Resolved               : 690
+Escalated              : 60
+Average Resolution     : 3.2 Days
+SLA Compliance         : 87%
+```
+
+---
+
+# 🔒 Security
+
+CityCare follows standard web application security practices:
+
+* JWT-based authentication
+* Password hashing using bcrypt
+* Role-based authorization
+* Protected API routes
+* Input validation
+* Environment variables for secrets
+* Rate limiting
+* Secure error handling
+* Audit logging
+
+---
+
+# 🌐 Deployment
+
+The application can be deployed using services such as:
+
+### Frontend
+
+* Vercel
+* Netlify
+
+### Backend
+
+* Render
+* Railway
+* AWS
+
+### Database
+
+* MongoDB Atlas
+
+Before deployment, configure the required environment variables and update the frontend/backend API URLs.
+
+---
+
+# 🔮 Future Enhancements
+
+Possible future improvements include:
+
+* Mobile application
+* Push notifications
+* Advanced GIS-based analytics
+* Ward-level dashboards
+* Public complaint heatmaps
+* QR-based complaint tracking
+* Multilingual interface
+* Digital certificates for civic contributors
+* Advanced notification system
+* Government department integrations
+
+---
+
+# 🎯 Project Objectives
+
+The major objectives of CityCare are:
+
+1. Digitize civic issue reporting.
+2. Improve communication between citizens and authorities.
+3. Provide transparent complaint tracking.
+4. Reduce duplicate and invalid complaints.
+5. Improve officer accountability.
+6. Monitor SLA deadlines.
+7. Provide useful administrative analytics.
+8. Improve the overall civic issue resolution process.
+
+---
+
+# 👨‍💻 Project Typ
